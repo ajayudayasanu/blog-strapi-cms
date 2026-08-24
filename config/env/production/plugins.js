@@ -1,11 +1,4 @@
-export default ({ env }: { env: (key: string, defaultValue?: string) => string }) => {
-  // Only activate GCS provider in production (App Engine).
-  // In local development the default local provider is used.
-  if (env('NODE_ENV') !== 'production') {
-    return {};
-  }
-
-  return {
+module.exports = ({ env }) => ({
     upload: {
       config: {
         provider: '@strapi-community/strapi-provider-upload-google-cloud-storage',
@@ -18,5 +11,4 @@ export default ({ env }: { env: (key: string, defaultValue?: string) => string }
         },
       },
     },
-  };
-};
+});

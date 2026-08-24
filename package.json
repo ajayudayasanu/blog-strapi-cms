@@ -12,13 +12,16 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "gcp-build": "strapi build"
   },
   "dependencies": {
+    "@strapi-community/strapi-provider-upload-google-cloud-storage": "^5.0.5",
     "@strapi/plugin-cloud": "5.23.0",
     "@strapi/plugin-users-permissions": "5.23.0",
     "@strapi/strapi": "5.23.0",
     "better-sqlite3": "11.3.0",
+    "pg": "^8.23.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",

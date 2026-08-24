@@ -129,3 +129,11 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+
+############################
+# GCP Deployment
+############################
+
+# app.yaml contains real secrets — never commit it.
+# Use app.yaml.example as a template instead.
+app.yaml
