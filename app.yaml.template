@@ -33,9 +33,6 @@ env_variables:
   GCS_BUCKET_NAME: 'strapi-cms-storage-bucket'
   GCS_BASE_PATH: 'cms'
 
-vpc_access_connector:
-  name: projects/strapi-cms-505607/locations/us-central1/connectors/strapi-connector
-
 beta_settings:
   cloud_sql_instances: 'strapi-cms-505607:us-central1:strapi-sql'
 
