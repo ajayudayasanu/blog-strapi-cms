@@ -7,6 +7,7 @@
     "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
+    "deploy:gcp": "gcloud app deploy app.yaml --project=strapi-cms-505607",
     "dev": "strapi develop",
     "develop": "strapi develop",
     "start": "strapi start",
