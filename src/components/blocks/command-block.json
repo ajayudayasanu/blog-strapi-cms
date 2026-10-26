@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_blocks_command_blocks",
+  "info": {
+    "displayName": "Command Block",
+    "icon": "terminal",
+    "description": "Terminal CLI command snippet"
+  },
+  "options": {},
+  "attributes": {
+    "command": {
+      "type": "text",
+      "required": true
+    },
+    "shell": {
+      "type": "enumeration",
+      "enum": ["bash", "sh", "powershell", "zsh", "cmd"],
+      "default": "bash",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

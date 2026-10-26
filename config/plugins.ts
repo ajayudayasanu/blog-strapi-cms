@@ -1,22 +1,22 @@
 export default ({ env }: { env: (key: string, defaultValue?: string) => string }) => {
-  // Only activate GCS provider in production (App Engine).
-  // In local development the default local provider is used.
-  if (env('NODE_ENV') !== 'production') {
-    return {};
-  }
-
-  return {
-    upload: {
-      config: {
-        provider: '@strapi-community/strapi-provider-upload-google-cloud-storage',
-        providerOptions: {
-          bucketName: env('GCS_BUCKET_NAME'),
-          basePath: env('GCS_BASE_PATH'),
-          baseUrl: `https://storage.googleapis.com/${env('GCS_BUCKET_NAME')}`,
-          publicFiles: true,
-          uniform: true,
+  // Google Cloud Storage provider for GCP App Engine production (or when FORCE_GCS is enabled)
+  if ((env('NODE_ENV') === 'production' || env('FORCE_GCS') === 'true') && env('GCS_BUCKET_NAME')) {
+    return {
+      upload: {
+        config: {
+          provider: '@strapi-community/strapi-provider-upload-google-cloud-storage',
+          providerOptions: {
+            bucketName: env('GCS_BUCKET_NAME'),
+            basePath: env('GCS_BASE_PATH', 'cms'),
+            baseUrl: `https://storage.googleapis.com/${env('GCS_BUCKET_NAME')}`,
+            publicFiles: true,
+            uniform: true,
+          },
         },
       },
-    },
-  };
+    };
+  }
+
+  // Local development fallback: default local upload provider
+  return {};
 };

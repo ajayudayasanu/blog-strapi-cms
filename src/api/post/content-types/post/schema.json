@@ -4,49 +4,51 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Post"
+    "displayName": "Post",
+    "description": "Blog posts with modular dynamic zones"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
-      "minLength": 4,
-      "maxLength": 150,
       "required": true,
       "unique": true
-    },
-    "Content": {
-      "type": "blocks"
     },
     "slug": {
       "type": "uid",
       "targetField": "title",
       "required": true
     },
-    "cover": {
+    "coverImage": {
       "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images"
-      ]
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
-    "authors": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "admin::user"
+    "topic": {
+      "type": "enumeration",
+      "enum": ["React", "Next.js", "Redux", "How-to", "Technology"],
+      "required": true
     },
     "tags": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tag.tag"
+      "type": "json"
     },
-    "seo": {
-      "type": "component",
-      "component": "seo.seo-information",
-      "repeatable": false
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.video",
+        "blocks.rich-text",
+        "blocks.command-block",
+        "blocks.code-block",
+        "blocks.diagram-image"
+      ]
     }
   }
 }

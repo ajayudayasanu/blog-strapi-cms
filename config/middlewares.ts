@@ -8,8 +8,23 @@ export default [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'storage.googleapis.com'],
-          'media-src': ["'self'", 'data:', 'blob:', 'storage.googleapis.com'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'storage.googleapis.com',
+            'market-assets.strapi.io',
+            'picsum.photos',
+            'fastly.picsum.photos',
+            'https:',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'storage.googleapis.com',
+            'https:',
+          ],
           upgradeInsecureRequests: null,
         },
       },
@@ -26,7 +41,7 @@ export default [
       textLimit: '200mb',
       formidable: {
         maxFileSize: 200 * 1024 * 1024, // 200mb in bytes
-        uploadDir: '/tmp', // App Engine filesystem is read-only; /tmp is writable
+        uploadDir: process.platform === 'win32' ? undefined : '/tmp',
       },
     },
   },

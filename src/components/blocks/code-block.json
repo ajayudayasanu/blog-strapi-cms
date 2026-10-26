@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_blocks_code_blocks",
+  "info": {
+    "displayName": "Code Block",
+    "icon": "code",
+    "description": "Syntax-highlighted source code with filename header"
+  },
+  "options": {},
+  "attributes": {
+    "code": {
+      "type": "text",
+      "required": true
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": ["typescript", "javascript", "json", "yaml", "css", "html", "toml"],
+      "default": "typescript",
+      "required": true
+    },
+    "filename": {
+      "type": "string"
+    }
+  }
+}

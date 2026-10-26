@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_heroes",
+  "info": {
+    "displayName": "Hero Section",
+    "icon": "landscape",
+    "description": "Article visual hero with banner image, excerpt, and author metadata"
+  },
+  "options": {},
+  "attributes": {
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "shortDescription": {
+      "type": "text",
+      "required": true
+    },
+    "author": {
+      "type": "string",
+      "default": "Ajay",
+      "required": true
+    },
+    "readMinutes": {
+      "type": "integer",
+      "default": 10
+    },
+    "topic": {
+      "type": "enumeration",
+      "enum": ["React", "Next.js", "Redux", "How-to", "Technology"],
+      "default": "How-to"
+    }
+  }
+}

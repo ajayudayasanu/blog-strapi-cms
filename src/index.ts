@@ -17,19 +17,52 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap({ strapi }: { strapi: any }) {
+  async bootstrap({ strapi }: { strapi: any }) {
     // App Engine Standard has a read-only filesystem at /workspace.
     // Redirect the uploads directory to /tmp which is always writable.
     // This acts as a safety net if the GCS provider falls back to local storage.
-    const tmpUploads = '/tmp/uploads';
-    if (!fs.existsSync(tmpUploads)) {
-      fs.mkdirSync(tmpUploads, { recursive: true });
+    if (process.env.NODE_ENV === 'production' && process.platform !== 'win32') {
+      const tmpUploads = '/tmp/uploads';
+      if (!fs.existsSync(tmpUploads)) {
+        fs.mkdirSync(tmpUploads, { recursive: true });
+      }
+
+      // Override Strapi's public dir so local upload provider writes to /tmp
+      if (strapi.dirs?.static?.public) {
+        strapi.dirs.static.public = '/tmp';
+      }
     }
 
-    // Override Strapi's public dir so local upload provider writes to /tmp
-    if (strapi.dirs?.static?.public) {
-      strapi.dirs.static.public = '/tmp';
+    // Automatically grant public find & findOne permissions for Post collection type
+    try {
+      const publicRole = await strapi.db.query('plugin::users-permissions.role').findOne({
+        where: { type: 'public' },
+        populate: ['permissions'],
+      });
+
+      if (publicRole) {
+        const actionsToEnable = [
+          'api::post.post.find',
+          'api::post.post.findOne',
+        ];
+        const existingActions = new Set(
+          (publicRole.permissions || []).map((p: any) => p.action)
+        );
+
+        for (const action of actionsToEnable) {
+          if (!existingActions.has(action)) {
+            await strapi.db.query('plugin::users-permissions.permission').create({
+              data: {
+                action,
+                role: publicRole.id,
+              },
+            });
+            strapi.log.info(`[Bootstrap] Granted ${action} permission to Public role`);
+          }
+        }
+      }
+    } catch (err) {
+      strapi.log.error('[Bootstrap] Failed to configure public permissions:', err);
     }
   },
 };
-
